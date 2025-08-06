@@ -1,0 +1,21 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  web:
+    resources:
+      add-mappings: false
+  application:
+    name: conta
+  datasource:
+    url: jdbc:postgresql://localhost:5432/conta
+    username: postgres
+    password: vinicius
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create-drop
+    # show-sql: true
+  profiles:
+    active: dev
