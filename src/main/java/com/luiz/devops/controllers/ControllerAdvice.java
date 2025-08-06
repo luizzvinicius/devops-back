@@ -1,5 +1,7 @@
 package com.luiz.devops.controllers;
 
+import com.luiz.devops.exceptions.*;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import jakarta.validation.ConstraintViolationException;
-import teste.fiesc.conta.exceptions.ApiErrorResponse;
-import com.luiz.devops.exceptions.InvalidEnumException;
-import com.luiz.devops.exceptions.OperacaoInvalidaException;
-import com.luiz.devops.exceptions.RegistroExistenteException;
-import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -45,7 +40,7 @@ public class ControllerAdvice {
     @ExceptionHandler(OperacaoInvalidaException.class)
     public ResponseEntity<ApiErrorResponse> handleOperacaoInvalidaException(OperacaoInvalidaException e) {
         return ResponseEntity.status(BAD_REQUEST).contentType(APPLICATION_JSON)
-        .body(new ApiErrorResponse("BAD_REQUEST", e.getMessage()));
+                .body(new ApiErrorResponse("BAD_REQUEST", e.getMessage()));
     }
 
     // HTTP
@@ -54,7 +49,7 @@ public class ControllerAdvice {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).contentType(APPLICATION_JSON)
                 .body(new ApiErrorResponse("Method_Not_Allowed", "Endpoint with this method is invalid"));
     }
-    
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ApiErrorResponse> wrongPath(NoHandlerFoundException e) {
         return ResponseEntity.status(NOT_FOUND).contentType(APPLICATION_JSON)

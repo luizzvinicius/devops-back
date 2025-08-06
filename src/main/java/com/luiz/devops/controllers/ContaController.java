@@ -1,16 +1,11 @@
 package com.luiz.devops.controllers;
 
+import com.luiz.devops.dtos.conta.ContaRequestDto;
+import com.luiz.devops.dtos.conta.ContaResponseDto;
+import com.luiz.devops.services.ContaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import teste.fiesc.conta.dtos.conta.ContaRequestDto;
-import teste.fiesc.conta.dtos.conta.ContaResponseDto;
-import com.luiz.devops.services.ContaService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -21,7 +16,7 @@ public class ContaController {
     public ContaController(ContaService contaService) {
         this.contaService = contaService;
     }
-    
+
     @PostMapping
     public ResponseEntity<ContaResponseDto> criarConta(@RequestBody ContaRequestDto dto) {
         ContaResponseDto contaResponse = contaService.criarConta(dto);

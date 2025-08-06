@@ -1,10 +1,9 @@
 package com.luiz.devops.repositories;
 
-import java.util.Optional;
-
+import com.luiz.devops.models.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.luiz.devops.models.Conta;
+import java.util.Optional;
 
 public interface ContaRepository extends JpaRepository<Conta, Long> {
     Optional<Conta> findByNumero(String numero);

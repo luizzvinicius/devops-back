@@ -1,4 +1,4 @@
-package teste.fiesc.conta.dtos.conta;
+package com.luiz.devops.dtos.conta;
 
 import java.util.List;
 

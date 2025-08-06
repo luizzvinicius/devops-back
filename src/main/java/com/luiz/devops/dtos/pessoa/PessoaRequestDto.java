@@ -1,4 +1,4 @@
-package teste.fiesc.conta.dtos.pessoa;
+package com.luiz.devops.dtos.pessoa;
 
 import jakarta.validation.constraints.NotBlank;
 

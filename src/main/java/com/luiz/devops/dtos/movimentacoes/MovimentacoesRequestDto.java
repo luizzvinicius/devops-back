@@ -1,4 +1,4 @@
-package teste.fiesc.conta.dtos.movimentacoes;
+package com.luiz.devops.dtos.movimentacoes;
 
 import jakarta.validation.constraints.NotNull;
 import com.luiz.devops.enums.OperacaoEnum;

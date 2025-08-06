@@ -1,9 +1,7 @@
 package com.luiz.devops.repositories;
 
+import com.luiz.devops.models.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.luiz.devops.models.Pessoa;
-
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
-    
 }

@@ -1,16 +1,15 @@
 package com.luiz.devops.services;
 
-import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
-import teste.fiesc.conta.dtos.conta.ContaRequestDto;
-import teste.fiesc.conta.dtos.conta.ContaResponseDto;
+import com.luiz.devops.dtos.conta.ContaRequestDto;
+import com.luiz.devops.dtos.conta.ContaResponseDto;
 import com.luiz.devops.exceptions.RegistroExistenteException;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.ContaRepository;
 import com.luiz.devops.repositories.PessoaRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ContaService {
@@ -25,15 +24,15 @@ public class ContaService {
     @Transactional
     public ContaResponseDto criarConta(ContaRequestDto dto) {
         Pessoa pessoa = pessoaRepository.findById(dto.pessoaId())
-            .orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));	
-        
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
+
         var numeroConta = repository.findByNumero(dto.numeroConta()).isPresent();
         if (numeroConta) {
             throw new RegistroExistenteException("Número da conta", "Conta");
         }
 
         var createdConta = repository.save(new Conta(pessoa, dto.numeroConta()));
-                
+
         return new ContaResponseDto(
                 createdConta.getId(),
                 createdConta.getMovimentacoes(),
@@ -55,7 +54,7 @@ public class ContaService {
         var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
         conta.setNumero(contaRequestDto.numeroConta());
         var updatedConta = repository.save(conta);
-        
+
         return new ContaResponseDto(updatedConta.getId(),
                 updatedConta.getMovimentacoes(),
                 updatedConta.getNumero(),

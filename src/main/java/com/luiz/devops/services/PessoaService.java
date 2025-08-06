@@ -1,21 +1,19 @@
 package com.luiz.devops.services;
 
-import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
-import teste.fiesc.conta.dtos.pessoa.PessoaPageDto;
-import teste.fiesc.conta.dtos.pessoa.PessoaRequestDto;
-import teste.fiesc.conta.dtos.pessoa.PessoaResponseDto;
+import com.luiz.devops.dtos.pessoa.PessoaPageDto;
+import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
+import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.PessoaRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class PessoaService {
     private final PessoaRepository repository;
@@ -27,7 +25,7 @@ public class PessoaService {
     public PessoaResponseDto criarPessoa(PessoaRequestDto dto) {
         Pessoa createdPessoa = repository.save(new Pessoa(dto.nome(), dto.cpf(), dto.endereco()));
         List<Conta> contas = List.of();
-        if(createdPessoa.getConta() != null) {
+        if (createdPessoa.getConta() != null) {
             contas = createdPessoa.getConta();
         }
 
@@ -36,7 +34,7 @@ public class PessoaService {
                 createdPessoa.getNome(),
                 createdPessoa.getCpf(),
                 createdPessoa.getEndereco()
-                ,contas
+                , contas
         );
     }
 
@@ -46,7 +44,7 @@ public class PessoaService {
         if (page.isEmpty()) {
             throw new RegistroNaoEncontradoException("Pessoa");
         }
-        
+
         List<PessoaResponseDto> pessoasResponse = page.get().map(pessoa -> new PessoaResponseDto(
                 pessoa.getId(),
                 pessoa.getNome(),
@@ -58,22 +56,17 @@ public class PessoaService {
         return new PessoaPageDto(pessoasResponse, page.getTotalPages(), page.getTotalElements());
     }
 
-    // public PessoaResponseDto buscarPessoaPorId(Long id) {
-    //     Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RuntimeException("Pessoa não encontrada"));
-    //     return new PessoaResponseDto(pessoa.getId(), pessoa.getNome(), pessoa.getCpf(), pessoa.getEndereco());
-    // }
-
     public PessoaResponseDto atualizarPessoa(Long id, PessoaRequestDto dto) {
         Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
         pessoa.setNome(dto.nome());
         pessoa.setEndereco(dto.endereco());
         Pessoa updatedPessoa = repository.save(pessoa);
         return new PessoaResponseDto(
-            updatedPessoa.getId(), 
-            updatedPessoa.getNome(), 
-            updatedPessoa.getCpf(), 
-            updatedPessoa.getEndereco()
-            ,updatedPessoa.getConta()
+                updatedPessoa.getId(),
+                updatedPessoa.getNome(),
+                updatedPessoa.getCpf(),
+                updatedPessoa.getEndereco(),
+                updatedPessoa.getConta()
         );
     }
 
