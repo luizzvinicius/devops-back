@@ -21,8 +21,8 @@ public class PessoaContoller {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<PessoaPageDto> buscarTodasPessoas(@RequestParam(defaultValue = "0") @PositiveOrZero int p) {
-        PessoaPageDto pessoa = pessoaService.buscarTodasPessoas(p);
+    public ResponseEntity<PessoaPageDto> buscarTodasPessoas(@RequestParam(defaultValue = "0") @PositiveOrZero int page) {
+        PessoaPageDto pessoa = pessoaService.buscarTodasPessoas(page);
         return ResponseEntity.ok(pessoa);
     }
 

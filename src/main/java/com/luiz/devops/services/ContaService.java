@@ -1,8 +1,8 @@
 package com.luiz.devops.services;
 
+import com.luiz.devops.dtos.conta.ContaMapper;
 import com.luiz.devops.dtos.conta.ContaRequestDto;
 import com.luiz.devops.dtos.conta.ContaResponseDto;
-import com.luiz.devops.exceptions.RegistroExistenteException;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Pessoa;
@@ -17,10 +17,12 @@ import java.util.UUID;
 public class ContaService {
     private final PessoaRepository pessoaRepository;
     private final ContaRepository repository;
+    private final ContaMapper mapper;
 
-    public ContaService(PessoaRepository pessoaRepository, ContaRepository contaRepository) {
+    public ContaService(PessoaRepository pessoaRepository, ContaRepository contaRepository, ContaMapper mapper) {
         this.pessoaRepository = pessoaRepository;
         this.repository = contaRepository;
+        this.mapper = mapper;
     }
 
     @Transactional
@@ -28,18 +30,9 @@ public class ContaService {
         Pessoa pessoa = pessoaRepository.findById(dto.pessoaId())
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
 
-        var numeroConta = repository.findById(dto.numeroConta()).isPresent();
-        if (numeroConta) {
-            throw new RegistroExistenteException("Número da conta", "Conta");
-        }
-
         var createdConta = repository.save(new Conta(pessoa));
 
-        return new ContaResponseDto(
-                createdConta.getId(),
-                createdConta.getMovimentacoes(),
-                createdConta.getSaldo()
-        );
+        return mapper.toDto(createdConta);
     }
 
     public ContaResponseDto buscarContaPorId(UUID id) {
