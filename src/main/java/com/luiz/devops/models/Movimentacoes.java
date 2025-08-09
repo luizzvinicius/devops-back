@@ -1,6 +1,5 @@
 package com.luiz.devops.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_MOVIMENTACAOES")
 public class Movimentacoes implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,7 +27,6 @@ public class Movimentacoes implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conta_id", referencedColumnName = "id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Conta conta;
 
     @NotNull(message = "Valor da transação não pode ser nulo")

@@ -11,6 +11,8 @@ import com.luiz.devops.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ContaService {
     private final PessoaRepository pessoaRepository;
@@ -26,39 +28,35 @@ public class ContaService {
         Pessoa pessoa = pessoaRepository.findById(dto.pessoaId())
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
 
-        var numeroConta = repository.findByNumero(dto.numeroConta()).isPresent();
+        var numeroConta = repository.findById(dto.numeroConta()).isPresent();
         if (numeroConta) {
             throw new RegistroExistenteException("Número da conta", "Conta");
         }
 
-        var createdConta = repository.save(new Conta(pessoa, dto.numeroConta()));
+        var createdConta = repository.save(new Conta(pessoa));
 
         return new ContaResponseDto(
                 createdConta.getId(),
                 createdConta.getMovimentacoes(),
-                createdConta.getNumero(),
                 createdConta.getSaldo()
         );
     }
 
-    public ContaResponseDto buscarContaPorId(Long id) {
+    public ContaResponseDto buscarContaPorId(UUID id) {
         var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
         return new ContaResponseDto(conta.getId(),
                 conta.getMovimentacoes(),
-                conta.getNumero(),
                 conta.getSaldo()
         );
     }
 
-    public ContaResponseDto atualizarContaPorId(Long id, ContaRequestDto contaRequestDto) {
-        var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
-        conta.setNumero(contaRequestDto.numeroConta());
-        var updatedConta = repository.save(conta);
-
-        return new ContaResponseDto(updatedConta.getId(),
-                updatedConta.getMovimentacoes(),
-                updatedConta.getNumero(),
-                updatedConta.getSaldo()
-        );
-    }
+//    public ContaResponseDto atualizarContaPorId(UUID id) {
+//        var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
+//        var updatedConta = repository.save(conta);
+//
+//        return new ContaResponseDto(updatedConta.getId(),
+//                updatedConta.getMovimentacoes(),
+//                updatedConta.getSaldo()
+//        );
+//    }
 }

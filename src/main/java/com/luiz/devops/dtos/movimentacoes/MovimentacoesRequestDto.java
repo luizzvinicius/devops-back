@@ -1,11 +1,14 @@
 package com.luiz.devops.dtos.movimentacoes;
 
-import jakarta.validation.constraints.NotNull;
 import com.luiz.devops.enums.OperacaoEnum;
 import com.luiz.devops.enums.ValueOfEnum;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.UUID;
 
 public record MovimentacoesRequestDto(
-    @NotNull long contaId,
-    @NotNull double valor,
-    @ValueOfEnum(enumClass = OperacaoEnum.class) String tipoMovimentacao
-) {}
+        @NotNull UUID contaId,
+        @NotNull double valor,
+        @ValueOfEnum(enumClass = OperacaoEnum.class) String tipoMovimentacao
+) {
+}
