@@ -27,7 +27,7 @@ public class Pessoa implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Conta> conta;
+    private List<Conta> contas;
 
     @NotBlank(message = "Nome Pessoa não pode ser nulo")
     @Column(nullable = false)
