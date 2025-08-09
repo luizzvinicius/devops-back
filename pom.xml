@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>devopsbackend</groupId>
 	<artifactId>Conta</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<name>Conta</name>
-	<description>Demo project for Spring Boot</description>
+	<version>1.0</version>
+	<name>bank-api</name>
+	<description>Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.6.0</version>
+			<version>2.8.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
