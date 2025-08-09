@@ -1,10 +1,10 @@
 package com.luiz.devops.services;
 
+import com.luiz.devops.dtos.pessoa.PessoaMapper;
 import com.luiz.devops.dtos.pessoa.PessoaPageDto;
 import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
 import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
-import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
@@ -17,43 +17,26 @@ import java.util.List;
 @Service
 public class PessoaService {
     private final PessoaRepository repository;
+    private final PessoaMapper mapper;
 
-    public PessoaService(PessoaRepository repository) {
+    public PessoaService(PessoaRepository repository, PessoaMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     public PessoaResponseDto criarPessoa(PessoaRequestDto dto) {
+        // validar cpf existente
         Pessoa createdPessoa = repository.save(new Pessoa(dto.nome(), dto.cpf(), dto.endereco()));
-        List<Conta> contas = List.of();
-        if (createdPessoa.getConta() != null) {
-            contas = createdPessoa.getConta();
-        }
 
-        return new PessoaResponseDto(
-                createdPessoa.getId(),
-                createdPessoa.getNome(),
-                createdPessoa.getCpf(),
-                createdPessoa.getEndereco()
-                , contas
-        );
+        return mapper.toDto(createdPessoa);
     }
 
-    public PessoaPageDto buscarTodasPessoas(int p) {
-        Page<Pessoa> page = repository.findAll(PageRequest.of(p, 10));
+    public PessoaPageDto buscarTodasPessoas(int page) {
+        Page<Pessoa> result = repository.findAll(PageRequest.of(page, 10));
 
-        if (page.isEmpty()) {
-            throw new RegistroNaoEncontradoException("Pessoa");
-        }
+        List<PessoaResponseDto> pessoasResponse = result.get().map(mapper::toDto).toList();
 
-        List<PessoaResponseDto> pessoasResponse = page.get().map(pessoa -> new PessoaResponseDto(
-                pessoa.getId(),
-                pessoa.getNome(),
-                pessoa.getCpf(),
-                pessoa.getEndereco(),
-                pessoa.getConta()
-        )).toList();
-
-        return new PessoaPageDto(pessoasResponse, page.getTotalPages(), page.getTotalElements());
+        return new PessoaPageDto(pessoasResponse, result.getTotalPages(), result.getTotalElements());
     }
 
     public PessoaResponseDto atualizarPessoa(Long id, PessoaRequestDto dto) {
@@ -61,13 +44,7 @@ public class PessoaService {
         pessoa.setNome(dto.nome());
         pessoa.setEndereco(dto.endereco());
         Pessoa updatedPessoa = repository.save(pessoa);
-        return new PessoaResponseDto(
-                updatedPessoa.getId(),
-                updatedPessoa.getNome(),
-                updatedPessoa.getCpf(),
-                updatedPessoa.getEndereco(),
-                updatedPessoa.getConta()
-        );
+        return mapper.toDto(updatedPessoa);
     }
 
     @Transactional

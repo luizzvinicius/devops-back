@@ -1,6 +1,8 @@
 package com.luiz.devops.services;
 
+import com.luiz.devops.dtos.movimentacoes.MovimentacoesMapper;
 import com.luiz.devops.dtos.movimentacoes.MovimentacoesRequestDto;
+import com.luiz.devops.dtos.movimentacoes.MovimentacoesResponseDto;
 import com.luiz.devops.enums.OperacaoEnum;
 import com.luiz.devops.exceptions.OperacaoInvalidaException;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
@@ -14,13 +16,16 @@ import org.springframework.stereotype.Service;
 public class MovimentacoesService {
     private final MovimentacoesRepository repository;
     private final ContaRepository contaRepository;
+    private final MovimentacoesMapper mapper;
 
-    public MovimentacoesService(MovimentacoesRepository repository, ContaRepository contaRepository) {
+    public MovimentacoesService(MovimentacoesRepository repository, ContaRepository contaRepository,
+                                MovimentacoesMapper mapper) {
         this.repository = repository;
         this.contaRepository = contaRepository;
+        this.mapper = mapper;
     }
 
-    public Movimentacoes criarMovimentacao(MovimentacoesRequestDto dto) {
+    public MovimentacoesResponseDto criarMovimentacao(MovimentacoesRequestDto dto) {
         Conta conta = contaRepository.findById(dto.contaId()).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
         OperacaoEnum tipoMovimentacao = OperacaoEnum.valueOf(dto.tipoMovimentacao());
 
@@ -36,6 +41,6 @@ public class MovimentacoesService {
         conta.setSaldo(conta.getSaldo() + valor);
         contaRepository.save(conta);
 
-        return repository.save(new Movimentacoes(conta, valor));
+        return mapper.toDto(repository.save(new Movimentacoes(conta, valor)));
     }
 }

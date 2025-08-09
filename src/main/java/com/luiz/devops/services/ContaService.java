@@ -37,10 +37,7 @@ public class ContaService {
 
     public ContaResponseDto buscarContaPorId(UUID id) {
         var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
-        return new ContaResponseDto(conta.getId(),
-                conta.getMovimentacoes(),
-                conta.getSaldo()
-        );
+        return mapper.toDto(conta);
     }
 
 //    public ContaResponseDto atualizarContaPorId(UUID id) {
