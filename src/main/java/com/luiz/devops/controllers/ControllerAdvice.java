@@ -25,6 +25,12 @@ public class ControllerAdvice {
                 .body(new ApiErrorResponse("NOT_FOUND", e.getMessage()));
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ApiErrorResponse> nullPointer() {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).contentType(APPLICATION_JSON)
+                .body(new ApiErrorResponse("INTERNAL_SERVER_ERROR", "NullPointer"));
+    }
+
     @ExceptionHandler(InvalidEnumException.class)
     public ResponseEntity<ApiErrorResponse> invalidEnumConvertion(InvalidEnumException e) {
         return ResponseEntity.status(BAD_REQUEST).contentType(APPLICATION_JSON)
