@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,7 @@ public class Conta implements Serializable {
 
     @PositiveOrZero(message = "Saldo não pode ser negativo")
     @Column(nullable = false)
-    private Double saldo = 0.0;
+    private BigDecimal saldo = new BigDecimal(0);
 
     public Conta(Pessoa pessoa) {
         this.pessoa = pessoa;

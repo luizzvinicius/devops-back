@@ -13,6 +13,8 @@ import com.luiz.devops.repositories.MovimentacoesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class MovimentacoesService {
     private final MovimentacoesRepository repository;
@@ -32,16 +34,16 @@ public class MovimentacoesService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
 
         OperacaoEnum tipoMovimentacao = OperacaoEnum.valueOf(dto.tipoMovimentacao());
-        if (tipoMovimentacao == OperacaoEnum.SAQUE && dto.valor() > conta.getSaldo()) {
+        if (tipoMovimentacao == OperacaoEnum.SAQUE && (dto.valor().compareTo(conta.getSaldo()) > 0)) {
             throw new OperacaoInvalidaException();
         }
 
-        double valor = switch (tipoMovimentacao) {
+        BigDecimal valor = switch (tipoMovimentacao) {
             case DEPOSITO -> dto.valor();
-            case SAQUE -> -dto.valor();
+            case SAQUE -> dto.valor().negate();
         };
 
-        conta.setSaldo(conta.getSaldo() + valor);
+        conta.setSaldo(conta.getSaldo().add(valor));
         contaRepository.save(conta);
 
         return mapper.toDto(repository.save(new Movimentacoes(conta, valor)));

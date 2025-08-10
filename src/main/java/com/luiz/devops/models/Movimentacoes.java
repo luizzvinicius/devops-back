@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -32,13 +33,13 @@ public class Movimentacoes implements Serializable {
 
     @NotNull(message = "Valor da transação não pode ser nulo")
     @Column(nullable = false)
-    private Double valor;
+    private BigDecimal valor;
 
     @NotNull(message = "Data não pode ser nula")
     @Column(nullable = false)
     private LocalDateTime data = LocalDateTime.now();
 
-    public Movimentacoes(Conta conta, Double valor) {
+    public Movimentacoes(Conta conta, BigDecimal valor) {
         this.valor = valor;
         this.conta = conta;
     }
