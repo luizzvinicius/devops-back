@@ -10,6 +10,7 @@ import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Movimentacoes;
 import com.luiz.devops.repositories.ContaRepository;
 import com.luiz.devops.repositories.MovimentacoesRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,10 +26,12 @@ public class MovimentacoesService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public MovimentacoesResponseDto criarMovimentacao(MovimentacoesRequestDto dto) {
-        Conta conta = contaRepository.findById(dto.contaId()).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
-        OperacaoEnum tipoMovimentacao = OperacaoEnum.valueOf(dto.tipoMovimentacao());
+        Conta conta = contaRepository.findById(dto.contaId())
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
 
+        OperacaoEnum tipoMovimentacao = OperacaoEnum.valueOf(dto.tipoMovimentacao());
         if (tipoMovimentacao == OperacaoEnum.SAQUE && dto.valor() > conta.getSaldo()) {
             throw new OperacaoInvalidaException();
         }
