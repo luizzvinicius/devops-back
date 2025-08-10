@@ -65,8 +65,8 @@ public class ControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleJsonValueInvalid(MethodArgumentNotValidException ex) {
         var fields = ex.getFieldErrors().stream()
-                .map(error -> String.format("'%s %s'", error.getField(), error.getDefaultMessage()))
-                .reduce("", (c, e) -> c + e + ", \n");
+                .map(error -> String.format("'%s' %s", error.getField(), error.getDefaultMessage()))
+                .reduce("", (c, e) -> c + e);
 
         return ResponseEntity.status(BAD_REQUEST).contentType(APPLICATION_JSON)
                 .body(new ApiErrorResponse("Invalid request pattern", fields));
@@ -90,7 +90,7 @@ public class ControllerAdvice {
     public ResponseEntity<ApiErrorResponse> handleValidationDTOs(ConstraintViolationException e) {
         var fields = e.getConstraintViolations().stream()
                 .map(error -> String.format("'%s %s'", error.getPropertyPath(), error.getMessage()))
-                .reduce("", (acc, error) -> acc + error + ", \n");
+                .reduce("", (acc, error) -> acc + error);
 
         return ResponseEntity.status(BAD_REQUEST).contentType(APPLICATION_JSON)
                 .body(new ApiErrorResponse("Invalid request pattern", fields));
