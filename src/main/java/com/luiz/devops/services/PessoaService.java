@@ -1,9 +1,6 @@
 package com.luiz.devops.services;
 
-import com.luiz.devops.dtos.pessoa.PessoaMapper;
-import com.luiz.devops.dtos.pessoa.PessoaPageDto;
-import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
-import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
+import com.luiz.devops.dtos.pessoa.*;
 import com.luiz.devops.exceptions.RegistroExistenteException;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Pessoa;
@@ -27,14 +24,14 @@ public class PessoaService {
     }
 
     @Transactional
-    public PessoaResponseDto criarPessoa(PessoaRequestDto dto) {
+    public CreatePessoaResponseDto criarPessoa(PessoaRequestDto dto) {
         repository.findByCpf(dto.cpf())
                 .ifPresent(p -> {
                     throw new RegistroExistenteException(p.getNome(), CLASS_NAME);
                 });
 
         Pessoa createdPessoa = repository.save(mapper.toEntity(dto));
-        return mapper.toDto(createdPessoa);
+        return mapper.toDtoCreatePessoa(createdPessoa);
     }
 
     public PessoaPageDto buscarTodasPessoas(int page) {

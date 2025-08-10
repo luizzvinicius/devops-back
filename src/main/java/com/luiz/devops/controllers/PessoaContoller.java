@@ -1,5 +1,6 @@
 package com.luiz.devops.controllers;
 
+import com.luiz.devops.dtos.pessoa.CreatePessoaResponseDto;
 import com.luiz.devops.dtos.pessoa.PessoaPageDto;
 import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
 import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
@@ -27,8 +28,8 @@ public class PessoaContoller {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaResponseDto> criarPessoa(@RequestBody @Valid PessoaRequestDto dto) {
-        PessoaResponseDto savedPessoa = pessoaService.criarPessoa(dto);
+    public ResponseEntity<CreatePessoaResponseDto> criarPessoa(@RequestBody @Valid PessoaRequestDto dto) {
+        CreatePessoaResponseDto savedPessoa = pessoaService.criarPessoa(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPessoa);
     }
 
