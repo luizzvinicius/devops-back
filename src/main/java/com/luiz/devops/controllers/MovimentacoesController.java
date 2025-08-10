@@ -3,6 +3,7 @@ package com.luiz.devops.controllers;
 import com.luiz.devops.dtos.movimentacoes.MovimentacoesRequestDto;
 import com.luiz.devops.dtos.movimentacoes.MovimentacoesResponseDto;
 import com.luiz.devops.services.MovimentacoesService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class MovimentacoesController {
     }
 
     @PostMapping
-    public ResponseEntity<MovimentacoesResponseDto> criarMovimentacao(@RequestBody MovimentacoesRequestDto dto) {
+    public ResponseEntity<MovimentacoesResponseDto> criarMovimentacao(@RequestBody @Valid MovimentacoesRequestDto dto) {
         MovimentacoesResponseDto movimentacaoResponse = movimentacoesService.criarMovimentacao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoResponse);
     }
