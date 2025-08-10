@@ -17,13 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_PESSOAS", uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf"})})
+@Table(name = "TB_PESSOAS", uniqueConstraints = {@UniqueConstraint(name = "UK_TB_PESSOAS_CPF", columnNames = {"cpf"})})
 public class Pessoa implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PESSOAS")
+    @SequenceGenerator(name = "SEQ_PESSOAS", sequenceName = "SEQ_PESSOAS", allocationSize = 1)
     private Long id;
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
