@@ -3,6 +3,7 @@ package com.luiz.devops.controllers;
 import com.luiz.devops.dtos.conta.ContaRequestDto;
 import com.luiz.devops.dtos.conta.ContaResponseDto;
 import com.luiz.devops.services.ContaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class ContaController {
     }
 
     @PostMapping
-    public ResponseEntity<ContaResponseDto> criarConta(@RequestBody ContaRequestDto dto) {
+    public ResponseEntity<ContaResponseDto> criarConta(@RequestBody @Valid ContaRequestDto dto) {
         ContaResponseDto contaResponse = contaService.criarConta(dto);
         return ResponseEntity.status(CREATED).body(contaResponse);
     }
