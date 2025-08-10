@@ -1,7 +1,7 @@
 package com.luiz.devops.enums;
 
 public enum OperacaoEnum {
-    DEPOSITO("deposito"), SAQUE("saque");
+    DEPOSITO("DEPOSITO"), SAQUE("SAQUE");
 
     private String operacao;
 
