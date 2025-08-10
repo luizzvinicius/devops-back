@@ -26,6 +26,7 @@ public class PessoaService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public PessoaResponseDto criarPessoa(PessoaRequestDto dto) {
         repository.findByCpf(dto.cpf())
                 .ifPresent(p -> {
@@ -44,8 +45,9 @@ public class PessoaService {
         return new PessoaPageDto(pessoasResponse, result.getTotalPages(), result.getTotalElements());
     }
 
+    @Transactional
     public PessoaResponseDto atualizarPessoa(Long id, PessoaRequestDto dto) {
-        Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
+        Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException(CLASS_NAME));
         pessoa.setNome(dto.nome());
         pessoa.setEndereco(dto.endereco());
         Pessoa updatedPessoa = repository.save(pessoa);
