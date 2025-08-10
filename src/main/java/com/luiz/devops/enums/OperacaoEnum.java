@@ -3,7 +3,7 @@ package com.luiz.devops.enums;
 public enum OperacaoEnum {
     DEPOSITO("DEPOSITO"), SAQUE("SAQUE");
 
-    private String operacao;
+    private final String operacao;
 
     OperacaoEnum(String operacao) {
         this.operacao = operacao;
