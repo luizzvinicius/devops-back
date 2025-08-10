@@ -34,6 +34,11 @@ public class PessoaService {
         return mapper.toDtoCreatePessoa(createdPessoa);
     }
 
+    public PessoaResponseDto buscarUmaPessoa(Long id) {
+        Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException(CLASS_NAME));
+        return mapper.toDto(pessoa);
+    }
+
     public PessoaPageDto buscarTodasPessoas(int page) {
         Page<Pessoa> result = repository.findAll(PageRequest.of(page, 10));
 

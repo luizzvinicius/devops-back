@@ -21,6 +21,12 @@ public class PessoaContoller {
         this.pessoaService = pessoaService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaResponseDto> buscarUmaPessoa(@PathVariable Long id) {
+        PessoaResponseDto pessoa = pessoaService.buscarUmaPessoa(id);
+        return ResponseEntity.ok(pessoa);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<PessoaPageDto> buscarTodasPessoas(@RequestParam(defaultValue = "0") @PositiveOrZero int page) {
         PessoaPageDto pessoa = pessoaService.buscarTodasPessoas(page);
