@@ -4,6 +4,7 @@ import com.luiz.devops.dtos.pessoa.PessoaMapper;
 import com.luiz.devops.dtos.pessoa.PessoaPageDto;
 import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
 import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
+import com.luiz.devops.exceptions.RegistroExistenteException;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.PessoaRepository;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 public class PessoaService {
+    private static final String CLASS_NAME = "Pessoa";
     private final PessoaRepository repository;
     private final PessoaMapper mapper;
 
@@ -25,9 +27,12 @@ public class PessoaService {
     }
 
     public PessoaResponseDto criarPessoa(PessoaRequestDto dto) {
-        // validar cpf existente
-        Pessoa createdPessoa = repository.save(new Pessoa(dto.nome(), dto.cpf(), dto.endereco()));
+        repository.findByCpf(dto.cpf())
+                .ifPresent(p -> {
+                    throw new RegistroExistenteException(p.getNome(), CLASS_NAME);
+                });
 
+        Pessoa createdPessoa = repository.save(mapper.toEntity(dto));
         return mapper.toDto(createdPessoa);
     }
 

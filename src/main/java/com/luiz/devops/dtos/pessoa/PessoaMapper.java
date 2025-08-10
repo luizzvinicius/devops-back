@@ -30,4 +30,8 @@ public class PessoaMapper {
                 contas
         );
     }
+
+    public Pessoa toEntity(PessoaRequestDto dto) {
+        return new Pessoa(dto.nome(), dto.cpf(), dto.endereco());
+    }
 }
