@@ -39,4 +39,9 @@ public class ContaService {
         var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
         return mapper.toDto(conta);
     }
+
+    @Transactional
+    public void deleteConta(UUID id) {
+        repository.deleteById(id);
+    }
 }

@@ -33,4 +33,10 @@ public class ContaController {
         ContaResponseDto conta = contaService.buscarContaPorId(id);
         return ResponseEntity.status(OK).body(conta);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteConta(@PathVariable UUID id) {
+        contaService.deleteConta(id);
+        return ResponseEntity.noContent().build();
+    }
 }
