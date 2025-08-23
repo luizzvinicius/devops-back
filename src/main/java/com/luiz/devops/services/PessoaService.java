@@ -56,6 +56,15 @@ public class PessoaService {
         return mapper.toDto(updatedPessoa);
     }
 
+    public PessoaAndContaDtoResponse buscarPessoaEConta(int id, int page) {
+        Page<PessoaAndContaDto> pessoaEContasQuery = repository.findPessoaAndConta(id, PageRequest.of(page, 10));
+        return new PessoaAndContaDtoResponse(
+                pessoaEContasQuery.getContent(),
+                pessoaEContasQuery.getTotalPages(),
+                pessoaEContasQuery.getTotalElements()
+        );
+    }
+
     @Transactional
     public void deletarPessoa(Long id) {
         repository.deleteById(id);

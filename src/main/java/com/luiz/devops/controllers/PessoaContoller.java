@@ -1,9 +1,6 @@
 package com.luiz.devops.controllers;
 
-import com.luiz.devops.dtos.pessoa.CreatePessoaResponseDto;
-import com.luiz.devops.dtos.pessoa.PessoaPageDto;
-import com.luiz.devops.dtos.pessoa.PessoaRequestDto;
-import com.luiz.devops.dtos.pessoa.PessoaResponseDto;
+import com.luiz.devops.dtos.pessoa.*;
 import com.luiz.devops.services.PessoaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -31,6 +28,12 @@ public class PessoaContoller {
     public ResponseEntity<PessoaPageDto> buscarTodasPessoas(@RequestParam(defaultValue = "0") @PositiveOrZero int page) {
         PessoaPageDto pessoa = pessoaService.buscarTodasPessoas(page);
         return ResponseEntity.ok(pessoa);
+    }
+
+    @GetMapping("/contas/{id}")
+    public ResponseEntity<PessoaAndContaDtoResponse> buscarPessoaEConta(@PathVariable("id") int id, @RequestParam(defaultValue = "0") @PositiveOrZero int page) {
+        PessoaAndContaDtoResponse pessoaAndContaDtos = pessoaService.buscarPessoaEConta(id, page);
+        return ResponseEntity.ok(pessoaAndContaDtos);
     }
 
     @PostMapping
