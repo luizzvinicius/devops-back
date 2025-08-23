@@ -30,6 +30,12 @@ public class PessoaContoller {
         return ResponseEntity.ok(pessoa);
     }
 
+    @GetMapping("/all/{nome}")
+    public ResponseEntity<PessoaPageDto> buscarPessoasFilter(@PathVariable String nome, @RequestParam(defaultValue = "0") @PositiveOrZero int page) {
+        PessoaPageDto pessoa = pessoaService.buscarPessoasFilter(nome, page);
+        return ResponseEntity.ok(pessoa);
+    }
+
     @GetMapping("/contas/{id}")
     public ResponseEntity<PessoaAndContaDtoResponse> buscarPessoaEConta(@PathVariable("id") int id, @RequestParam(defaultValue = "0") @PositiveOrZero int page) {
         PessoaAndContaDtoResponse pessoaAndContaDtos = pessoaService.buscarPessoaEConta(id, page);

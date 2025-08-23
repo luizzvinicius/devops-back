@@ -69,4 +69,10 @@ public class PessoaService {
     public void deletarPessoa(Long id) {
         repository.deleteById(id);
     }
+
+    public PessoaPageDto buscarPessoasFilter(String nome, int page) {
+        Page<Pessoa> pessoasFiltered = repository.findAllByNomeContains(nome, PageRequest.of(page, 10));
+        List<PessoaResponseDto> pessoasResponse = pessoasFiltered.get().map(mapper::toDto).toList();
+        return new PessoaPageDto(pessoasResponse, pessoasFiltered.getTotalPages(), pessoasFiltered.getTotalElements());
+    }
 }

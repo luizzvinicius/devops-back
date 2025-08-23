@@ -28,4 +28,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
             nativeQuery = true
     )
     Page<PessoaAndContaDto> findPessoaAndConta(int id, Pageable pagination);
+    Page<Pessoa> findAllByNomeContains(String nome, Pageable pagination);
 }
