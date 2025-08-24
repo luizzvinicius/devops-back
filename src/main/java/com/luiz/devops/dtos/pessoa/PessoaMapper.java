@@ -34,9 +34,9 @@ public class PessoaMapper {
     public CreatePessoaResponseDto toDtoCreatePessoa(Pessoa pessoa) {
         return new CreatePessoaResponseDto(
                 pessoa.getId(),
-                pessoa.getNome(),
+                pessoa.getNome().toLowerCase(),
                 pessoa.getCpf(),
-                pessoa.getEndereco()
+                pessoa.getEndereco().toLowerCase()
         );
     }
 

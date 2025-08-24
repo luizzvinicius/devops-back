@@ -50,8 +50,8 @@ public class PessoaService {
     @Transactional
     public PessoaResponseDto atualizarPessoa(Long id, PessoaRequestDto dto) {
         Pessoa pessoa = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException(CLASS_NAME));
-        pessoa.setNome(dto.nome());
-        pessoa.setEndereco(dto.endereco());
+        pessoa.setNome(dto.nome().toLowerCase());
+        pessoa.setEndereco(dto.endereco().toLowerCase());
         Pessoa updatedPessoa = repository.save(pessoa);
         return mapper.toDto(updatedPessoa);
     }
@@ -60,7 +60,7 @@ public class PessoaService {
         Page<PessoaAndContaDto> pessoaEContasQuery = repository.findPessoaAndConta(id, PageRequest.of(page, 10));
         return new PessoaAndContaDtoResponse(
                 pessoaEContasQuery.getContent(),
-                pessoaEContasQuery.getTotalPages(),
+                pessoaEContasQuery.getNumberOfElements(),
                 pessoaEContasQuery.getTotalElements()
         );
     }

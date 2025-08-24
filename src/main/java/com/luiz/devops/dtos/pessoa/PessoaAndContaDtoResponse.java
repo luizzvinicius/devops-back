@@ -4,6 +4,6 @@ import java.util.List;
 
 public record PessoaAndContaDtoResponse(
         List<PessoaAndContaDto> pessoaAndContaDtoList,
-        int page,
-        long pageSize
+        long pageSize,
+        long totalElements
 ) {}
