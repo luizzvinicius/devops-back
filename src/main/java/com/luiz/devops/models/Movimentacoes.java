@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TB_MOVIMENTACAOES")
+@Table(name = "TB_MOVIMENTACOES")
 public class Movimentacoes implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
