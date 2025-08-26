@@ -1,16 +1,18 @@
 package com.luiz.devops.services;
 
-import com.luiz.devops.dtos.conta.ContaMapper;
-import com.luiz.devops.dtos.conta.ContaRequestDto;
-import com.luiz.devops.dtos.conta.ContaResponseDto;
+import com.luiz.devops.dtos.conta.*;
 import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Conta;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.ContaRepository;
 import com.luiz.devops.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,6 +40,19 @@ public class ContaService {
     public ContaResponseDto buscarContaPorId(UUID id) {
         var conta = repository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
         return mapper.toDto(conta);
+    }
+
+    @Transactional
+    public ContaMovimentacoesResponseDto getContaMovimentacoes(UUID contaId, int page) {
+        Conta conta = repository.findById(contaId).orElseThrow(() -> new RegistroNaoEncontradoException("Conta"));
+        Page<ContaMovimentacoesDto> result = repository.getContaMovimentacoes(
+                contaId, PageRequest.of(page, 10)
+        );
+
+        List<ContaMovimentacoesDto> contaMovimentacoes = result.getContent();
+        BigDecimal saldo = conta.getSaldo();
+
+        return new ContaMovimentacoesResponseDto(contaMovimentacoes, saldo, result.getSize(), result.getTotalElements());
     }
 
     @Transactional
