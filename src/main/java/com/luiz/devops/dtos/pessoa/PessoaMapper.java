@@ -34,13 +34,13 @@ public class PessoaMapper {
     public CreatePessoaResponseDto toDtoCreatePessoa(Pessoa pessoa) {
         return new CreatePessoaResponseDto(
                 pessoa.getId(),
-                pessoa.getNome().toLowerCase(),
+                pessoa.getNome(),
                 pessoa.getCpf(),
-                pessoa.getEndereco().toLowerCase()
+                pessoa.getEndereco()
         );
     }
 
     public Pessoa toEntity(PessoaRequestDto dto) {
-        return new Pessoa(dto.nome(), dto.cpf(), dto.endereco());
+        return new Pessoa(dto.nome().toLowerCase(), dto.cpf(), dto.endereco().toLowerCase());
     }
 }
