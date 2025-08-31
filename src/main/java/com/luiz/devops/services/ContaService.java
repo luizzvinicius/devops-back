@@ -7,6 +7,7 @@ import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.ContaRepository;
 import com.luiz.devops.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class ContaService {
     private final PessoaRepository pessoaRepository;
@@ -33,7 +35,7 @@ public class ContaService {
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Pessoa"));
 
         var createdConta = repository.save(new Conta(pessoa));
-
+        log.info("Conta de {} criada com sucesso", createdConta.getPessoa().getNome());
         return mapper.toDto(createdConta);
     }
 
@@ -51,12 +53,13 @@ public class ContaService {
 
         List<ContaMovimentacoesDto> contaMovimentacoes = result.getContent();
         BigDecimal saldo = conta.getSaldo();
-
+        log.info("Movimentação da conta {} buscadas", contaId);
         return new ContaMovimentacoesResponseDto(contaMovimentacoes, saldo, result.getSize(), result.getTotalElements());
     }
 
     @Transactional
     public void deleteConta(UUID id) {
+        log.info("Conta {} deletada", id);
         repository.deleteById(id);
     }
 }

@@ -6,12 +6,14 @@ import com.luiz.devops.exceptions.RegistroNaoEncontradoException;
 import com.luiz.devops.models.Pessoa;
 import com.luiz.devops.repositories.PessoaRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class PessoaService {
     private static final String CLASS_NAME = "Pessoa";
@@ -31,6 +33,7 @@ public class PessoaService {
                 });
 
         Pessoa createdPessoa = repository.save(mapper.toEntity(dto));
+        log.info("Pessoa {} criada com sucesso", createdPessoa.getNome());
         return mapper.toDtoCreatePessoa(createdPessoa);
     }
 
@@ -53,11 +56,13 @@ public class PessoaService {
         pessoa.setNome(dto.nome().toLowerCase());
         pessoa.setEndereco(dto.endereco().toLowerCase());
         Pessoa updatedPessoa = repository.save(pessoa);
+        log.info("Pessoa {} atualizada com sucesso", updatedPessoa.getNome());
         return mapper.toDto(updatedPessoa);
     }
 
     public PessoaAndContaDtoResponse buscarPessoaEConta(int id, int page) {
         Page<PessoaAndContaDto> pessoaEContasQuery = repository.findPessoaAndConta(id, PageRequest.of(page, 10));
+        log.info("Contas da pessoa com id {} buscadas", id);
         return new PessoaAndContaDtoResponse(
                 pessoaEContasQuery.getContent(),
                 pessoaEContasQuery.getNumberOfElements(),
@@ -67,12 +72,14 @@ public class PessoaService {
 
     @Transactional
     public void deletarPessoa(Long id) {
+        log.info("Pessoa de id {} deletada", id);
         repository.deleteById(id);
     }
 
     public PessoaPageDto buscarPessoasFilter(String nome, int page) {
         Page<Pessoa> pessoasFiltered = repository.findAllByNomeContains(nome, PageRequest.of(page, 10));
         List<PessoaResponseDto> pessoasResponse = pessoasFiltered.get().map(mapper::toDto).toList();
+        log.info("Buscando pessoa {}, resultado {}", nome, pessoasResponse);
         return new PessoaPageDto(pessoasResponse, pessoasFiltered.getTotalPages(), pessoasFiltered.getTotalElements());
     }
 }

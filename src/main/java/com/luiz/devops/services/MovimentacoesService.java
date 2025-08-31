@@ -11,10 +11,12 @@ import com.luiz.devops.models.Movimentacoes;
 import com.luiz.devops.repositories.ContaRepository;
 import com.luiz.devops.repositories.MovimentacoesRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Service
 public class MovimentacoesService {
     private final MovimentacoesRepository repository;
@@ -45,7 +47,7 @@ public class MovimentacoesService {
 
         conta.setSaldo(conta.getSaldo().add(valor));
         contaRepository.save(conta);
-
+        log.info("Movimentação {} de R$ {} salva na conta {}", tipoMovimentacao, valor, conta.getId());
         return mapper.toDto(repository.save(new Movimentacoes(conta, valor)));
     }
 }

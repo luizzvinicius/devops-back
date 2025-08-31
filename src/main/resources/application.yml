@@ -1,3 +1,16 @@
+logging:
+#  file:
+#    name: "./logs/bank-app.log"
+  structured:
+    format:
+      file: gelf
+  pattern:
+    console: "%d - %highlight(%level) [%thread] --- %logger{30} -> %class{60} -> %green(%method) : %msg%n"
+  level:
+    root: warn
+    com.luiz.devops: info
+    #org.hibernate.sql: trace
+    #org.hibernate.orm.jdbc.bind: trace
 spring:
   output:
     ansi:
@@ -6,7 +19,7 @@ spring:
     resources:
       add-mappings: false
   application:
-    name: conta
+    name: "Banking-app"
   datasource:
     url: jdbc:postgresql://localhost:5432/conta
     username: postgres
@@ -15,7 +28,6 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create-drop
-    # show-sql: true
+      ddl-auto: update
   profiles:
     active: dev
