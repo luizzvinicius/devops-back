@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>devopsbackend</groupId>
-	<artifactId>Conta</artifactId>
+	<artifactId>bank-api</artifactId>
 	<version>1.0</version>
 	<name>bank-api</name>
 	<description>Spring Boot</description>

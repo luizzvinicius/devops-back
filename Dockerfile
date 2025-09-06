@@ -8,13 +8,13 @@ RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine-3.22
 
-ENV db_url="jdbc:postgresql://host.docker.internal:5432/conta"
-ENV password="vinicius"
-ENV user="postgres"
+ENV DB_URL="jdbc:postgresql://db:5432/conta"
+ENV DB_USER="postgres"
+ENV DB_PASSWORD="postgres123"
 
-COPY --from=build app/target/Conta-1.0.jar app.jar
+COPY --from=build app/target/bank-api-1.0.jar bank-api.jar
 
 EXPOSE 5432
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "bank-api.jar"]
