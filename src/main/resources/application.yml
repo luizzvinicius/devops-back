@@ -1,7 +1,7 @@
 app:
   keycloak:
     admin:
-      clientId: "spring-security-bank-api"
+      clientId: "admin-cli"
       clientSecret: ${CLIENT_SECRET}
     realm: bank-api
     serverUrl: http://localhost:9082

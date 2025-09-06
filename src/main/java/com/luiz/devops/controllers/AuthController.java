@@ -25,7 +25,7 @@ public class AuthController {
 
     @PostMapping("/logout/{id}")
     public ResponseEntity<Void> logoutUser(@PathVariable String id) {
-        authService.logoutUser((id));
+        authService.logoutUser(id);
         return ResponseEntity.ok().build();
     }
 }
