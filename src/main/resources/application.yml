@@ -1,3 +1,11 @@
+app:
+  keycloak:
+    admin:
+      clientId: "spring-security-bank-api"
+      clientSecret: ${CLIENT_SECRET}
+    realm: bank-api
+    serverUrl: http://localhost:9082
+
 logging:
 #  file:
 #    name: "./logs/bank-app.log"
@@ -31,3 +39,8 @@ spring:
       ddl-auto: update
   profiles:
     active: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${app.keycloak.serverUrl}/realms/${app.keycloak.realm}
