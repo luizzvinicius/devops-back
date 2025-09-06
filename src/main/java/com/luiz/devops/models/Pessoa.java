@@ -36,7 +36,7 @@ public class Pessoa implements Serializable {
 
     @NotBlank(message = "Nome Pessoa não pode ser nulo")
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 dígitos")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @NotBlank(message = "Nome Pessoa não pode ser nulo")
