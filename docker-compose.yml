@@ -14,7 +14,7 @@ services:
     networks:
       - backend-network
   backend:
-    image: bank-api:1.0
+    image: luizvinicius/bank-api:1.0
     container_name: bank-backend
     env_file:
       - .env
