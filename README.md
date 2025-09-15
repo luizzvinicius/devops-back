@@ -180,6 +180,26 @@ You can connect to the PostgreSQL database using:
 2. Create a new connection with the above credentials
 3. Browse and query the database directly in VS Code
 
+## Docker Production Setup
+
+### Production Build
+
+The project includes production Docker configuration:
+
+#### Multi-stage Dockerfile
+```bash
+# Build production image
+docker build -t devops-back .
+
+# Run production container
+docker run -p 8080:8080 devops-back
+```
+
+#### Docker Compose Production
+```bash
+# Start with docker-compose
+docker-compose up -d
+```
 ## Troubleshooting
 
 ### Common Issues and Solutions
