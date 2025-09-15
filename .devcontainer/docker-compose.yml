@@ -1,0 +1,42 @@
+version: '3.8'
+
+volumes:
+  postgres-data:
+    name: postgres-data
+
+services:
+  app:
+    container_name: bank-backend
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/conta
+      DB_USER: postgres
+      DB_PASSWORD: postgres123
+    networks:
+      - backend-network
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  db:
+    image: postgres:17-alpine
+    container_name: bank-db
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+    environment:
+      - POSTGRES_DB=conta
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_USER=postgres
+
+networks:
+  backend-network:
+    name: backend-network
