@@ -24,6 +24,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain authRoutes(HttpSecurity http) throws Exception {
         return commonConfig(http)
+                .securityMatcher("/api/v1/auth/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(POST, "/api/v1/auth/logout/**").authenticated()
                         .requestMatchers(POST, "/api/v1/auth/login").permitAll()
@@ -31,13 +32,15 @@ public class SecurityConfig {
                 .build();
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        return commonConfig(http)
-//                .securityMatcher("/api/v1/**")
-//                .authorizeHttpRequests(auth -> auth
-//                        .anyRequest().authenticated()
-//                )
-//                .build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return commonConfig(http)
+                .securityMatcher("/api/v1/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/conta/**").authenticated()
+                        .requestMatchers("/api/v1/movimentacoes/**").authenticated()
+                        .requestMatchers("/api/v1/pessoa/**").authenticated()
+                )
+                .build();
+    }
 }

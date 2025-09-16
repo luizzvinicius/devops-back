@@ -1,7 +1,7 @@
 app:
   keycloak:
     admin:
-      clientId: "admin-cli"
+      clientId: spring-security-bank-api
       clientSecret: ${CLIENT_SECRET}
     realm: bank-api
     serverUrl: http://localhost:9082
@@ -41,6 +41,15 @@ spring:
     active: dev
   security:
     oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: spring-security-bank-api
+            client-secret: VMsURuiKpPGpRtWi6bQZHQNYeJF4dr16
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            issuer-uri: ${app.keycloak.serverUrl}/realms/${app.keycloak.realm}
       resourceserver:
         jwt:
           issuer-uri: ${app.keycloak.serverUrl}/realms/${app.keycloak.realm}
