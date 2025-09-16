@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class AuthController {
     private final AuthService authService;
@@ -24,8 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout/{id}")
-    public ResponseEntity<Void> logoutUser(@PathVariable String id) {
-        authService.logoutUser(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> logoutUser(@PathVariable String id, @RequestHeader(name = "Authorization") String token) {
+        authService.logoutUser(id, token);
+        return ResponseEntity.noContent().build();
     }
 }

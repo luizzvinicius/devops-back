@@ -2,7 +2,7 @@ package com.luiz.devops.services;
 
 import com.luiz.devops.dtos.auth.ResponseLoginDto;
 import com.luiz.devops.feignclients.LoginClient;
-import org.keycloak.admin.client.Keycloak;
+import com.luiz.devops.feignclients.LogoutClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +11,19 @@ import java.util.Map;
 
 @Service
 public class AuthService {
-    private final Keycloak keycloak;
     private final LoginClient loginClient;
-    @Value("${app.keycloak.realm}")
-    private String realm;
+    private final LogoutClient logoutClient;
     @Value("${app.keycloak.admin.clientId}")
     private String clientId;
 
-    public AuthService(Keycloak keycloak, LoginClient loginClient) {
-        this.keycloak = keycloak;
+    public AuthService(LoginClient loginClient, LogoutClient logoutClient) {
         this.loginClient = loginClient;
+        this.logoutClient = logoutClient;
     }
 
     public ResponseLoginDto loginUser(String email, String password) {
         Map<String, String> formParams = new HashMap<>();
-        formParams.put("client_id", clientId);
+        formParams.put("client_id", this.clientId);
         formParams.put("grant_type", "password");
         formParams.put("username", email);
         formParams.put("password", password);
@@ -33,9 +31,7 @@ public class AuthService {
         return loginClient.loginUser(formParams);
     }
 
-    public void logoutUser(String id) {
-        keycloak.realm(realm)
-                .users().get(id).getUserSessions()
-                .forEach(session -> keycloak.realm(realm).deleteSession(session.getId(), false));
+    public void logoutUser(String id, String token) {
+        logoutClient.logoutUser(id, token);
     }
 }
