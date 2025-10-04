@@ -4,7 +4,7 @@ app:
       clientId: spring-security-bank-api
       clientSecret: ${CLIENT_SECRET}
     realm: bank-api
-    serverUrl: http://localhost:9082
+    serverUrl: ${KEYCLOAK_URL}
 
 logging:
 #  file:
@@ -45,7 +45,7 @@ spring:
         registration:
           keycloak:
             client-id: spring-security-bank-api
-            client-secret: VMsURuiKpPGpRtWi6bQZHQNYeJF4dr16
+            client-secret: ${CLIENT_SECRET}
             scope: openid, profile, email
         provider:
           keycloak:
