@@ -9,6 +9,8 @@ services:
       POSTGRES_PASSWORD: keycloak123
     ports:
       - "5433:5432"
+    networks:
+      - backend-network
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
     depends_on:
@@ -25,8 +27,14 @@ services:
       KC_DB_USERNAME: postgres
       KC_DB_PASSWORD: keycloak123
       KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
-      KC_HOSTNAME: localhost
+      # KC_HOSTNAME: localhost
+    networks:
+      - backend-network
 
 volumes:
   pgdata:
     name: "postgres-keycloak-data"
+
+networks:
+  backend-network:
+    external: true
