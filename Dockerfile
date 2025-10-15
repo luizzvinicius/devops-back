@@ -9,8 +9,6 @@ RUN mvn clean install -DskipTests
 FROM eclipse-temurin:21-jre-alpine-3.22
 
 ENV DB_URL="jdbc:postgresql://db:5432/conta"
-ENV DB_USER="postgres"
-ENV DB_PASSWORD="postgres123"
 
 COPY --from=build app/target/bank-api-1.0.jar bank-api.jar
 
