@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-back-configmap
+data:
+  DB_URL: "jdbc:postgresql://db:5432/conta"
+  DB_USER: "postgres"

@@ -1,0 +1,15 @@
+image:
+  repository: "luizvinicius/bank-api"
+  tag: "1.0"
+
+replicas: "1"
+
+service:
+  port: "8080"
+
+env:
+  DB_URL: "jdbc:postgresql://db:5432/conta"
+  DB_USER: "postgres"
+
+applicationSecret:
+  DB_PASSWORD: cG9zdGdyZXMxMjM=

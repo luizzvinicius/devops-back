@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devops-back
+  name: devops-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-back
+  template:
+    metadata:
+      labels:
+        app: devops-back
+    spec:
+      containers:
+      - image: luizvinicius/bank-api:1.0
+        name: bank-api
+        ports:
+          - containerPort: 8080
+      envFrom:
+        - configMapRef:
+            name: devops-back-configmap

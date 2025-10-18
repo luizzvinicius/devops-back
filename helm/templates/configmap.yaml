@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  DB_URL: {{ .Values.env.DB_URL }}
+  DB_USER: {{ .Values.env.DB_USER }}
