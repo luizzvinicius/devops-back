@@ -1,5 +1,5 @@
 image:
-  repository: "luizvinicius/bank-api"
+  repository: "bank-api-mysql"
   tag: "1.0"
 
 replicas: "1"
@@ -8,9 +8,9 @@ service:
   port: "8080"
 
 env:
-  DB_USER: app
-  DB_URL: jdbc:postgresql://my-postgres-db-rw.default:5432/app
+  DB_USER: root
+  DB_URL: jdbc:mysql://10.108.47.170:3306/app?createDatabaseIfNotExist=true
 
 applicationSecret:
-  password: UGNCcTg5aWtBQTlQUHIwb2VNVlNaTzQ5ZVpLTVZyNVB0V2ZHMmhwU1JzcEVLUWp4Q0pLNWZwSGIzZUlGVFlSRA==
+  password: root
 
