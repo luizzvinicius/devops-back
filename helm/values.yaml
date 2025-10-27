@@ -8,9 +8,8 @@ service:
   port: "8080"
 
 env:
-  DB_USER: app
-  DB_URL: jdbc:postgresql://my-postgres-db-rw.default:5432/app
+  DB_USER: appuser
+  DB_URL: jdbc:postgresql://my-postgres-rw.postgres:5432/appdb
 
 applicationSecret:
-  password: UGNCcTg5aWtBQTlQUHIwb2VNVlNaTzQ5ZVpLTVZyNVB0V2ZHMmhwU1JzcEVLUWp4Q0pLNWZwSGIzZUlGVFlSRA==
-
+  password: app@123

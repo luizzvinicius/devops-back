@@ -1,18 +1,16 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: my-postgres-db
+  name: {{ .Release.Name }}
+#  namespace: postgres
 spec:
   instances: 1
-  # imageName: cerit.io/cloudnative-pg/postgresql:15.0
-  enableSuperuserAccess: true
-  superuserSecret:
-    name: devops-back
-  # bootstrap:
-  #   initdb:
-  #     database: conta
-  #     owner: postgres
-  #     secret:
-  #       name: devops-back
+  imageName: ghcr.io/cloudnative-pg/postgresql:15
   storage:
-    size: 500Mi
+    size: 200Mi
+  bootstrap:
+    initdb:
+      database: appdb
+      owner: appuser
+      secret:
+        name: {{ .Release.Name }}
