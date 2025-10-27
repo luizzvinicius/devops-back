@@ -9,7 +9,7 @@ service:
 
 env:
   DB_USER: appuser
-  DB_URL: jdbc:postgresql://my-postgres-rw.postgres:5432/appdb
+  DB_URL: jdbc:postgresql://devops-back-rw.default:5432/appdb
 
 applicationSecret:
   password: app@123
