@@ -10,6 +10,7 @@ service:
 env:
   DB_USER: appuser
   DB_URL: jdbc:postgresql://devops-back-rw.default:5432/appdb
+  DB_DDL_AUTO: update
 
 applicationSecret:
   password: app@123
