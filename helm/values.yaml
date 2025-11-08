@@ -1,6 +1,6 @@
 image:
   repository: "luizvinicius/bank-api"
-  tag: "1.0.1"
+  tag: "1.0.2"
 
 replicas: "1"
 
@@ -9,7 +9,8 @@ service:
 
 env:
   DB_USER: appuser
-  DB_URL: "jdbc:postgresql://devops-back-rw.default:5432/appdb"
+  DB_URL: jdbc:postgresql://devops-back-rw.default:5432/appdb
+  DB_DDL_AUTO: validate
 
 applicationSecret:
   password: app@123

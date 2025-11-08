@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: flyway/flyway:11.16.0-alpine
+          args:
+            - migrate
+          env:
+            - name: FLYWAY_URL
+              value: "{{ .Values.env.DB_URL }}"
+            - name: FLYWAY_USER
+              value: "{{ .Values.env.DB_USER }}"
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: password
+          volumeMounts:
+            - name: migrations
+              mountPath: /flyway/sql
+      restartPolicy: Never
+      volumes:
+        - name: migrations
+          configMap:
+            name: flyway-scripts
