@@ -6,5 +6,6 @@ metadata:
     app: {{ .Release.Name }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/hook: PreSync
 data:
   {{ (.Files.Glob "flyway/*.sql").AsConfig | indent 2 }}

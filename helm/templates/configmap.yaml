@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/hook: PreSync
 data:
   DB_URL: {{ .Values.env.DB_URL }}
   DB_USER: {{ .Values.env.DB_USER }}
