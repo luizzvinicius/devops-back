@@ -4,5 +4,7 @@ metadata:
   name: flyway-scripts
   labels:
     app: {{ .Release.Name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 data:
   {{ (.Files.Glob "flyway/*.sql").AsConfig | indent 2 }}
