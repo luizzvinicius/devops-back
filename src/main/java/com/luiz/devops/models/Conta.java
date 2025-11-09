@@ -34,6 +34,9 @@ public class Conta implements Serializable {
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movimentacoes> movimentacoes;
 
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Investimentos> investimentos;
+
     @PositiveOrZero(message = "Saldo não pode ser negativo")
     @Column(nullable = false)
     private BigDecimal saldo = new BigDecimal(0);
