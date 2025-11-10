@@ -22,7 +22,7 @@ This command will install the controller in the `ingress-nginx` namespace, creat
 You should see several pods running in the `ingress-nginx` namespace:
 
 ```bash
-kubectl get pods --namespace=ingress-nginx
+kubectl get pods --namespace=ingress-nginx 
 ```
 
 ## CloudNativePG Operator Installation
