@@ -6,8 +6,11 @@ import java.util.UUID;
 
 public record ContaInvestimentosDto(
         UUID idConta,
+        int idInvestimento,
         String tipoInvestimento,
         BigDecimal totalInvestido,
+        BigDecimal taxa,
+        Timestamp dataInicio,
         Timestamp resgate
 ) {
 }

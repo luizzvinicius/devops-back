@@ -70,7 +70,7 @@ public class InvestimentoService {
         var investimento = repository.findById(idInvestimento)
                 .orElseThrow(() -> new RegistroNaoEncontradoException("Investimento"));
 
-        if (!verificarSaquePorTipoInvestimento(investimento)) {
+        if (!verificarSaquePorTipoInvestimento(investimento) || investimento.getValor().compareTo(saque) < 0) {
             throw new RuntimeException("Saque não permitido");
         }
 

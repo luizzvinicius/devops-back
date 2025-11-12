@@ -15,8 +15,11 @@ public interface InvestimentoRepository extends JpaRepository<Investimentos, Int
     @Query(value = """
             select
                 conta.id,
+                investimento.id,
                 investimento.tipo,
                 investimento.valor,
+                investimento.taxa,
+                investimento.data_inicio,
                 investimento.resgate
              from
             	tb_contas conta

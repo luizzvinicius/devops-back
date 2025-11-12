@@ -37,9 +37,10 @@ public class SecurityConfig {
         return commonConfig(http)
                 .securityMatcher("/api/v1/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/conta/**").authenticated()
-                        .requestMatchers("/api/v1/movimentacoes/**").authenticated()
-                        .requestMatchers("/api/v1/pessoa/**").authenticated()
+                        .requestMatchers("/api/v1/conta/**").permitAll()
+                        .requestMatchers("/api/v1/movimentacoes/**").permitAll()
+                        .requestMatchers("/api/v1/pessoa/**").permitAll()
+                        .requestMatchers("/api/v1/investimento/**").permitAll()
                 )
                 .build();
     }
