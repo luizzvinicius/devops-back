@@ -58,7 +58,9 @@ public class InvestimentoService {
                 savedInvestimento.getId(),
                 savedInvestimento.getTipo(),
                 savedInvestimento.getValor(),
-                savedInvestimento.getResgate()
+                savedInvestimento.getResgate(),
+                savedInvestimento.getTaxa(),
+                savedInvestimento.getDataInicio()
         );
     }
 

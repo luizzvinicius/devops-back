@@ -7,6 +7,8 @@ public record InvestimentoResponseDto(
         int idInvestimento,
         String tipoInvestimento,
         BigDecimal totalInvestido,
-        LocalDateTime resgate
+        LocalDateTime resgate,
+        BigDecimal taxa,
+        LocalDateTime dataInicio
 ) {
 }
