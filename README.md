@@ -1,4 +1,4 @@
-# DevOps Backend - Dev Container Tutorial.
+# DevOps Backend - Dev Container Tutorial
 
 This tutorial will guide you through setting up and running this Spring Boot banking API application using Visual Studio Code Dev Containers.
 
