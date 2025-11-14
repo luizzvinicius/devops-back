@@ -28,6 +28,6 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: ${DB_DDL_AUTO}
   profiles:
     active: dev

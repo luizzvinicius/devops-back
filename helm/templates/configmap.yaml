@@ -8,3 +8,4 @@ metadata:
 data:
   DB_URL: {{ .Values.env.DB_URL }}
   DB_USER: {{ .Values.env.DB_USER }}
+  DB_DDL_AUTO: {{ .Values.env.DB_DDL_AUTO }}

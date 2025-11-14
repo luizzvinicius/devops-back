@@ -1,2 +1,4 @@
+job:
+  enabled: true
 env:
-  DB_URL: "jdbc:postgresql://db:5432/conta"
+  DB_DDL_AUTO: validate
