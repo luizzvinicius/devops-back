@@ -7,6 +7,9 @@ replicas: "1"
 service:
   port: "8080"
 
+job:
+  enabled: false
+
 env:
   DB_USER: appuser
   DB_URL: jdbc:postgresql://devops-back-rw.default:5432/appdb
