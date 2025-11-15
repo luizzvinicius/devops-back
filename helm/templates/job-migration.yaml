@@ -1,6 +1,6 @@
+apiVersion: batch/v1
 job:
   enabled: {{ .Values.job.enabled }}
-apiVersion: batch/v1
 kind: Job
 metadata:
   name: db-migration
