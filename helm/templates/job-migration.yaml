@@ -31,3 +31,4 @@ spec:
         - name: migrations
           configMap:
             name: flyway-scripts
+{{- end }}
