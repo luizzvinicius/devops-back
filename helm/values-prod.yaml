@@ -2,3 +2,4 @@ job:
   enabled: true
 env:
   DB_DDL_AUTO: validate
+strategy: "canary"

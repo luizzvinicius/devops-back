@@ -7,6 +7,10 @@ replicas: "3"
 service:
   port: "8080"
 
+rollout:
+  enabled: true
+strategy: "bluegreen"
+
 job:
   enabled: false
 

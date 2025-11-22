@@ -1,0 +1,15 @@
+{{- if eq .Values.strategy "bluegreen" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      nodePort: 30000
+      protocol: TCP
+  selector:
+    app: {{ .Release.Name }}
+{{- end }}
