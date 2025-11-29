@@ -108,3 +108,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/bank-api:${{ needs.check-release.outputs.version }}
+          no-cache: true
