@@ -8,7 +8,7 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
-#      nodePort: 30000
+      nodePort: 30080
       protocol: TCP
   selector:
     app: {{ .Release.Name }}

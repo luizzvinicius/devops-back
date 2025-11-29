@@ -57,6 +57,7 @@ jobs:
           sed -i "s/^version:.*/version: $VERSION/" helm/Chart.yaml
           sed -i "s/^appVersion:.*/appVersion: \"$VERSION\"/" helm/Chart.yaml
           sed -i "s/^\(\s*tag:\s*\).*/\1\"$VERSION\"/" helm/values.yaml
+          sed -i "s/^\(\s*version:\s*\).*/\1$VERSION/" src/main/resources/application.yml
 
       - name: Commit and push updated Chart.yaml
         env:
