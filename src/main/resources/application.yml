@@ -20,7 +20,7 @@ spring:
       add-mappings: false
   application:
     name: "Banking-app"
-    version: 1.0.4
+    version: 1.0.5
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}

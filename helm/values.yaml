@@ -1,6 +1,6 @@
 image:
   repository: "luizvinicius/bank-api"
-  tag: "1.0.4"
+  tag: "1.0.5"
 
 replicas: "3"
 
