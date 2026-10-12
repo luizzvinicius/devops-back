@@ -47,7 +47,7 @@ public class PessoaService {
 
         List<PessoaResponseDto> pessoasResponse = result.get().map(mapper::toDto).toList();
 
-        return new PessoaPageDto(pessoasResponse, result.getTotalPages(), result.getTotalElements());
+        return new PessoaPageDto(pessoasResponse, result.getSize(), result.getTotalElements());
     }
 
     @Transactional
